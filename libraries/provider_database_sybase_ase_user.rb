@@ -16,12 +16,12 @@
 # limitations under the License.
 #
 
-require File.join(File.dirname(__FILE__), 'provider_database_sql_server')
+require File.join(File.dirname(__FILE__), 'provider_database_sybase_ase')
 
 class Chef
   class Provider
     class Database
-      class SybaseAseUser < Chef::Provider::Database::SqlServer
+      class SybaseAseUser < Chef::Provider::Database::SybaseAse
         include Chef::Mixin::ShellOut
 
         def load_current_resource
