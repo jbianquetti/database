@@ -17,7 +17,7 @@
 #
 
 require File.join(File.dirname(__FILE__), 'resource_database')
-require File.join(File.dirname(__FILE__), 'provider_database_sql_server')
+require File.join(File.dirname(__FILE__), 'provider_database_sybase_ase')
 
 class Chef
   class Resource
