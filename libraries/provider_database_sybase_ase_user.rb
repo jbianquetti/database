@@ -35,7 +35,7 @@ class Chef
         def action_create
           begin
             unless exists?(:logins)
-              db.execute("CREATE LOGIN #{@new_resource.username} WITH PASSWORD = '#{@new_resource.password}', CHECK_POLICY = OFF").do
+              db.execute("sp_addlogin #{@new_resource.username}, #{@new_resource.password}, #{@new_resource.database_name}").do
               @new_resource.updated_by_last_action(true)
             end
             unless exists?(:users)
@@ -45,7 +45,7 @@ class Chef
               else
                 Chef::Log.info("#{@new_resource} database_name not provided, creating user in global context.")
               end
-              db.execute("CREATE USER #{@new_resource.username} FOR LOGIN #{@new_resource.username}").do
+              db.execute("sp_changedbowner #{@new_resource.username} ").do
               @new_resource.updated_by_last_action(true)
             end
           ensure
@@ -56,11 +56,11 @@ class Chef
         def action_drop
           begin
             if exists?(:users)
-              db.execute("DROP USER #{@new_resource.username}").do
+              db.execute("sp_dropuser #{@new_resource.username}").do
               @new_resource.updated_by_last_action(true)
             end
             if exists?(:logins)
-              db.execute("DROP LOGIN #{@new_resource.username}").do
+              db.execute("sp_droplogin #{@new_resource.username}").do
               @new_resource.updated_by_last_action(true)
             end
           ensure

@@ -73,7 +73,7 @@ class Chef
         def exists?
           exists = false
           begin
-            result = db.execute("SELECT name FROM sys.databases")
+            result = db.execute("SELECT name FROM sysdatabases")
             result.each do |row|
               if row['name'] =~ /#{@new_resource.database_name}/i
                 exists = true
@@ -93,6 +93,7 @@ class Chef
               :host => @new_resource.connection[:host],
               :username => @new_resource.connection[:username],
               :password => @new_resource.connection[:password],
+              :tds_version => @new_resource.connection[:tds_version] || '100' ,
               :port => @new_resource.connection[:port] || 5000
             )
           end
