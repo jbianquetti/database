@@ -73,7 +73,7 @@ class Chef
         def exists?
           exists = false
           begin
-            result = db.execute("SELECT name FROM sys.databases")
+            result = db.execute("SELECT name FROM sysdatabases")
             result.each do |row|
               if row['name'] =~ /#{@new_resource.database_name}/i
                 exists = true
